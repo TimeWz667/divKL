@@ -1,8 +1,12 @@
-#' 
+#' Kullback-Leibler Divergence Estimation
 #'
 #' @param x values sampled from the distribution of interest
 #' @param y values sampled from the comparator distribution
 #' @param type using empirical p.d.f. or c.d.f.
+#'
+#' @references 
+#' Pérez-Cruz F. Kullback-Leibler divergence estimation of continuous distributions. In2008 IEEE international symposium on information theory 2008 Jul 6 (pp. 1666-1670). IEEE.
+#' 
 #'
 #' @return value of KL divergence
 #' @export
