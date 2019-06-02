@@ -26,10 +26,11 @@ emp_cdf  <-  function(x) {
 }  
 
 
+#' @export
 #' @rdname emp_cdf
-emp_pdf <- function(x) {
+emp_pdf <- function(x, ...) {
   x <- sort(x)
-  den <- density(x)
+  den <- density(x, ...)
   
   fn <- approxfun(den$x, den$y, method="linear", rule=2)
     

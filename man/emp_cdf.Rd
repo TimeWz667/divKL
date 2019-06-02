@@ -7,7 +7,7 @@
 \usage{
 emp_cdf(x)
 
-emp_pdf(x)
+emp_pdf(x, ...)
 }
 \arguments{
 \item{x}{a vectors of values}
@@ -25,7 +25,4 @@ print(cdf_x(0))
 
 pdf_x <- emp_pdf(x)
 print(pdf_x(0))
-}
-\references{
-Pérez-Cruz F. Kullback-Leibler divergence estimation of continuous distributions. In2008 IEEE international symposium on information theory 2008 Jul 6 (pp. 1666-1670). IEEE.
 }

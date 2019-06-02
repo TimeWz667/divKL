@@ -4,7 +4,7 @@
 \alias{KL_divergence}
 \title{Kullback-Leibler Divergence Estimation}
 \usage{
-KL_divergence(x, y, type = c("pdf", "cdf"))
+KL_divergence(x, y, type = c("pdf", "cdf"), ...)
 }
 \arguments{
 \item{x}{values sampled from the distribution of interest}
@@ -12,6 +12,8 @@ KL_divergence(x, y, type = c("pdf", "cdf"))
 \item{y}{values sampled from the comparator distribution}
 
 \item{type}{using empirical p.d.f. or c.d.f.}
+
+\item{...}{options for density(...) if empirical p.d.f. applied}
 }
 \value{
 value of KL divergence
@@ -26,4 +28,7 @@ KL_divergence(x, y, "pdf")
 KL_divergence(x, y, "cdf")
 KL_divergence(y, x, "pdf")
 KL_divergence(y, x, "cdf")
+}
+\references{
+Pérez-Cruz F. Kullback-Leibler divergence estimation of continuous distributions. In2008 IEEE international symposium on information theory 2008 Jul 6 (pp. 1666-1670). IEEE.
 }
