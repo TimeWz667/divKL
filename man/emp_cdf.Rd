@@ -2,15 +2,20 @@
 % Please edit documentation in R/density.R
 \name{emp_cdf}
 \alias{emp_cdf}
-\alias{emp_pdf}
 \title{Empirical distribution functions}
 \usage{
-emp_cdf(x)
-
-emp_pdf(x, ...)
+emp_cdf(x, x_f, x_e, eps)
 }
 \arguments{
 \item{x}{a vectors of values}
+
+\item{x_f}{lower bound of x}
+
+\item{x_e}{upper bound of x}
+
+\item{eps}{tolarance}
+
+\item{...}{arguments for densratio::}
 }
 \value{
 function of empirical pdf/cdf
@@ -22,7 +27,4 @@ Empirical cdf with cumsum. Empirical pdf with kernel density function
 x <- rnorm(100)
 cdf_x <- emp_cdf(x)
 print(cdf_x(0))
-
-pdf_x <- emp_pdf(x)
-print(pdf_x(0))
 }

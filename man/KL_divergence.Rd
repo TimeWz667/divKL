@@ -22,6 +22,8 @@ value of KL divergence
 Kullback-Leibler Divergence Estimation
 }
 \examples{
+library(divKL)
+
 x <- rnorm(100, 1)
 y <- rnorm(100, 3)
 KL_divergence(x, y, "pdf")
