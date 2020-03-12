@@ -13,6 +13,8 @@
 #' @export
 #'
 #' @examples
+#' library(divKL)
+#' 
 #' x <- rnorm(100, 1)
 #' y <- rnorm(100, 3)
 #' KL_divergence(x, y, "pdf")
@@ -23,19 +25,20 @@ KL_divergence <- function(x, y, type=c("pdf", "cdf"), ...) {
   type <- match.arg(type)
   
   if (type == "cdf") {
-    mx <- max(y); mn <- min(y)
-    x[x>mx] <- mx; x[x < mn] <- mn
-    
     dx <- diff(sort(unique(x)))
     dy <- diff(sort(unique(y)))
     ex <- min(dx); ey <- min(dy)
-    e <- min(ex, ey)/50
+    eps <- min(ex, ey)/10
+    
+    mx <- max(c(x, y)) + eps
+    mn <- min(c(x, y)) - eps
+    
     n <- length(x)    
-    P <- emp_cdf(x); Q <- emp_cdf(y)
-    kl <- mean(log(P(x)-P(x-e))- log(Q(x)-Q(x-e)))
+    P <- emp_cdf(x, mn, mx, eps); Q <- emp_cdf(y, mn, mx, eps)
+    kl <- mean(log(P(x + eps/2) - P(x - eps/2)) - log(Q(x + eps/2) - Q(x - eps/2))) - 1
   } else {
-    P <- emp_pdf(x, ...); Q <- emp_pdf(y, ...)
-    kl <- mean((log(P(x)) - log(Q(x))))
+    dr <- densratio::densratio(x, y, ...)
+    kl <- mean(log(dr$compute_density_ratio(x)))
   }
   kl
 }

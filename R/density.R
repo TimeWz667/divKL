@@ -3,6 +3,10 @@
 #' Empirical cdf with cumsum. Empirical pdf with kernel density function
 #' 
 #' @param x a vectors of values
+#' @param x_f lower bound of x
+#' @param x_e upper bound of x
+#' @param eps tolarance
+#' @param ... arguments for densratio::
 #'
 #' @return function of empirical pdf/cdf
 #' 
@@ -12,29 +16,27 @@
 #' x <- rnorm(100)
 #' cdf_x <- emp_cdf(x)
 #' print(cdf_x(0))
-#' 
-#' pdf_x <- emp_pdf(x)
-#' print(pdf_x(0))
-emp_cdf  <-  function(x) {
-  x   <-   sort(x)
-  x.u <-   unique(x)
-  n  <-  length(x) 
-  x.rle  <-  rle(x)$lengths
-  y  <-  (cumsum(x.rle)-0.5) / n
-  fn  <-  approxfun(x.u, y, method="linear", yleft=0, yright=1, rule=2)
-  fn 
-}  
-
-
-#' @export
-#' @rdname emp_cdf
-emp_pdf <- function(x, ...) {
+emp_cdf  <-  function(x, x_f, x_e, eps) {
   x <- sort(x)
-  den <- density(x, ...)
+  if (missing(eps)) {
+    eps <- diff(sort(unique(x))) / 10
+  }
   
-  fn <- approxfun(den$x, den$y, method="linear", rule=2)
-    
-  fn  
-}
-
-
+  if (missing(x_f)) {
+    x_f <- min(x) - eps
+  } else {
+    x_f <- min(x_f, min(x) - eps)
+  }
+  
+  if (missing(x_e)) {
+    x_e <- max(x) + eps
+  } else {
+    x_e <- max(x_e, max(x) + eps)
+  }
+  
+  xu <- c(x_f, unique(x), x_e)
+  yu <- sapply(xu, function(xi) mean(fBasics::Heaviside(xi - x)))
+  
+  fn <- approxfun(xu, yu, method="linear", yleft=0, yright=1, rule=2)
+  fn
+}  
